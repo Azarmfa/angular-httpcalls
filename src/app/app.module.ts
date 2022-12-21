@@ -1,23 +1,34 @@
+import { CustomloginInterceptor } from './customlogin.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DemoComponent } from './demo/demo.component';
-import { UserComponent } from './user.component';
-import { HeaderDirective } from './header.directive';
-import { CamelcasePipe } from './camelcase.pipe';
-import { HttpClientModule } from '@angular/common/http';
-
+import { TestComponent } from './test/test.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSidenavModule } from '@angular/material/sidenav';
 @NgModule({
-  declarations: [
-    AppComponent,
-    DemoComponent,
-    UserComponent,
-    HeaderDirective,
-    CamelcasePipe,
+  declarations: [AppComponent, TestComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatMenuModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatSidenavModule,
   ],
-  imports: [BrowserModule, HttpClientModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomloginInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
